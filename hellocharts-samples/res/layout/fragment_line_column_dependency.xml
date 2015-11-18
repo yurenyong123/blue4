@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+
+    tools:context="lecho.lib.hellocharts.samples.PreviewLineChartActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:layout_weight = "1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="当前温度"
+            android:id="@+id/TempletextView"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textIsSelectable="false"
+            />
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/chart_top"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </lecho.lib.hellocharts.view.LineChartView>
+
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/chart_temple"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </lecho.lib.hellocharts.view.LineChartView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=" "
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
+
+        <lecho.lib.hellocharts.view.PreviewLineChartView
+            android:id="@+id/chart_preview_temple"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.63" >
+        </lecho.lib.hellocharts.view.PreviewLineChartView>
+
+        <Button
+            android:layout_width="61dp"
+            android:layout_height="27dp"
+            android:text="返回"
+            android:id="@+id/buttonReturnReal"
+            android:layout_gravity="center"
+            android:layout_weight="0.07" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight = "8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:id="@+id/timespan1"
+            android:textSize="10dp"
+            android:gravity="center"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="设置"
+            android:id="@+id/set_timespan"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="▶"
+            android:textSize="27sp"
+            android:layout_gravity="center"
+            android:id="@+id/buttonRecord"
+            android:textAlignment="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="清空"
+            android:id="@+id/clear"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="读取"
+            android:id="@+id/read"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="查看"
+            android:id="@+id/look_record"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</LinearLayout>
+    <!--</LinearLayout>-->
