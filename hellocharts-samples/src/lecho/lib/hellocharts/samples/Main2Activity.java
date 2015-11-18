@@ -245,6 +245,7 @@ public class Main2Activity extends AppCompatActivity {
                 Bundle stateB = new Bundle();
                 stateB.putIntArray("trans_state", state);
                 intent.putExtras(stateB);
+                //h
 
                 startActivity(intent);
 
