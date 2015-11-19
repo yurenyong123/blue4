@@ -98,7 +98,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         private boolean buttonRecordState;
 
         private Button recordButtonReturnReal;
-        private Button setTimeButton;
         private Button clearButton;
         private Button readButton;
         private Button lookRecordButton;
@@ -151,10 +150,12 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             realButtonRecord=(Button)rootView.findViewById(R.id.buttonRecord);
             buttonRecordState=false;
 
-            setTimeButton = (Button)rootView.findViewById(R.id.set_timespan);
             clearButton = (Button)rootView.findViewById(R.id.clear);
+
             readButton = (Button)rootView.findViewById(R.id.read);
+
             lookRecordButton=(Button)rootView.findViewById(R.id.look_record);
+
             maxmunTextView=(TextView)rootView.findViewById(R.id.maxmun_text);
             maxmumTextView_num=(TextView)rootView.findViewById(R.id.maxmun_num);
             minmunTextView=(TextView)rootView.findViewById(R.id.minimum_text);
@@ -332,6 +333,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             }
         }
 
+
         private  void disReadHideRecord()
         {
             realeChartTop.setVisibility(View.VISIBLE);
@@ -356,7 +358,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             realButtonRecord.setVisibility(View.GONE);
             realTempleTextView.setVisibility(View.GONE);
 
-            setTimeButton.setVisibility(View.GONE);
+            //setTimeButton.setVisibility(View.GONE);
             clearButton.setVisibility(View.GONE);
             readButton.setVisibility(View.GONE);
             lookRecordButton.setVisibility(View.GONE);
@@ -376,13 +378,8 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             List<PointValue> values = new ArrayList<PointValue>();
 
             for(int j=0;j<recordMsgBuffer.length;j++) {
-//                if(j==0)
-//                    values.add(new PointValue(j, 0));
-//                else
                 values.add(new PointValue(j, (float)recordMsgBuffer[j] / 10f));
             }
-
-
 
             Line line = new Line(values);
             line.setColor(ChartUtils.COLOR_GREEN);
@@ -543,19 +540,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             line.setHasLabels(true);
             line.setHasPoints(false);
             List<PointValue> lineList=line.getValues();
-//            for (int j=lineList.size()-1;j>-1;j--)
-//            {
-//                PointValue value=lineList.get(j);
-//                if (j<1)
-//                {
-//                    value.setTarget(value.getX(), textTemple);
-//                }
-//                else
-//                {
-//                    PointValue nextValue=lineList.get(j-1);
-//                    value.setTarget(value.getX(), nextValue.getY());
-//                }
-//            }
+
 
             for (int j=0;j<lineList.size();j++)
             {
@@ -699,47 +684,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             sendBroadcast(intent);//发送广播
         }
 
-        //列
-//        private void generateColumnData() {
-//
-//            int numSubcolumns = 1;
-//            int numColumns = months.length;
-//
-//            List<AxisValue> axisValues = new ArrayList<AxisValue>();
-//            List<Column> columns = new ArrayList<Column>();
-//            List<SubcolumnValue> values;
-//            for (int i = 0; i < numColumns; ++i) {
-//
-//
-//
-//                values = new ArrayList<SubcolumnValue>();
-//                for (int j = 0; j < numSubcolumns; ++j) {
-//                    //values.add(new SubcolumnValue((float) 2 * 50f + 5, Color.rgb(255,0,0)));//设置数据高度,随机颜色
-//
-//                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
-//                }
-//
-//                axisValues.add(new AxisValue(i).setLabel(months[i]));
-//
-//                columns.add(new Column(values).setHasLabelsOnlyForSelected(true));
-//            }
-//
-//            columnData = new ColumnChartData(columns);
-//
-//            columnData.setAxisXBottom(new Axis(axisValues).setHasLines(true));
-//            columnData.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(2));
-//
-//            chartBottom.setColumnChartData(columnData);
-//
-//            // Set value touch listener that will trigger changes for chartTop.
-//            chartBottom.setOnValueTouchListener(new ValueTouchListener());
-//
-//            // Set selection mode to keep selected month column highlighted.
-//            chartBottom.setValueSelectionEnabled(true);
-//
-//            chartBottom.setZoomType(ZoomType.HORIZONTAL);
-//
-//        }
+
 
         private class ValueTouchListener implements ColumnChartOnValueSelectListener {
 

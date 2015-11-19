@@ -69,56 +69,54 @@
         android:orientation="vertical"
         >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/blank"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="清空"
+            android:text="@string/clear"
             android:id="@+id/clear"
-            android:layout_gravity="center"
+            android:layout_below="@id/blank"
             android:layout_centerVertical="true"
             />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="▶"
-            android:textSize="27sp"
-            android:layout_gravity="center"
-            android:id="@+id/buttonRecord"
-            android:layout_above="@id/clear"
-            android:textAlignment="center"/>
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:text="设置"
-            android:id="@+id/set_timespan"
-            android:layout_above="@id/buttonRecord"
-            android:layout_gravity="center"/>
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:text="读取"
-            android:id="@+id/read"
+            android:text="@string/scan"
+            android:id="@+id/look_record"
             android:layout_below="@id/clear"
             android:layout_gravity="center"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="查看"
-            android:id="@+id/look_record"
-            android:layout_below="@id/read"
+            android:text="@string/read"
+            android:id="@+id/read"
+            android:layout_above="@id/blank"
             android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="▶"
+            android:textSize="27sp"
+            android:id="@+id/buttonRecord"
+            android:layout_above="@id/read"
+            android:layout_centerVertical="true" />
+
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:id="@+id/minimum_text"
-            android:text="最低温度"
+            android:text="@string/minimun_temp"
             android:gravity="center"
             android:layout_centerVertical="true"/>
 
@@ -141,7 +139,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="最高温度"
+            android:text="@string/maxmun_temp"
             android:id="@+id/maxmun_text"
             android:layout_above="@id/maxmun_num"
             android:gravity="center"/>

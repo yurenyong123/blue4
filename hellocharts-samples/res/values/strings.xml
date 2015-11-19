@@ -29,4 +29,12 @@
     <string name="action_settings">查看记录</string>
     <string name="title_activity_main22">Main22Activity</string>
 
+    <string name="read">读取</string>
+    <string name="setting">设置</string>
+    <string name="clear">清空</string>
+    <string name="scan">查看</string>
+    <string name="minimun_temp">最低温度</string>
+    <string name="maxmun_temp">最高温度</string>
+    <string name="back">返回</string>
+
 </resources>
