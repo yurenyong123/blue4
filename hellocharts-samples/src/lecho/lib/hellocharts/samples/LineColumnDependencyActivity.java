@@ -26,6 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -100,6 +102,11 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         private Button clearButton;
         private Button readButton;
         private Button lookRecordButton;
+        private TextView maxmunTextView;
+        private TextView maxmumTextView_num;
+        private TextView minmunTextView;
+        private TextView minmunTextView_num;
+
 
         //private int i = 0;
         //private int TIME = 1000;
@@ -148,6 +155,10 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             clearButton = (Button)rootView.findViewById(R.id.clear);
             readButton = (Button)rootView.findViewById(R.id.read);
             lookRecordButton=(Button)rootView.findViewById(R.id.look_record);
+            maxmunTextView=(TextView)rootView.findViewById(R.id.maxmun_text);
+            maxmumTextView_num=(TextView)rootView.findViewById(R.id.maxmun_num);
+            minmunTextView=(TextView)rootView.findViewById(R.id.minimum_text);
+            minmunTextView_num=(TextView)rootView.findViewById(R.id.minimun_num);
 
             recordButtonReturnReal=(Button)rootView.findViewById(R.id.buttonReturnReal);
             recordButtonReturnReal.setOnClickListener(new returnRealeButtonListener());
@@ -331,6 +342,12 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             recordChart.setVisibility(View.GONE);
             recordPreviewChart.setVisibility(View.GONE);
             recordButtonReturnReal.setVisibility(View.GONE);
+
+            maxmunTextView.setVisibility(View.GONE);
+            maxmumTextView_num.setVisibility(View.GONE);
+            minmunTextView.setVisibility(View.GONE);
+            minmunTextView_num.setVisibility(View.GONE);
+
         }
 
         private  void disRecordHideReal()
@@ -338,6 +355,11 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             realeChartTop.setVisibility(View.GONE);
             realButtonRecord.setVisibility(View.GONE);
             realTempleTextView.setVisibility(View.GONE);
+
+            setTimeButton.setVisibility(View.GONE);
+            clearButton.setVisibility(View.GONE);
+            readButton.setVisibility(View.GONE);
+            lookRecordButton.setVisibility(View.GONE);
             
 
             recordChart.setVisibility(View.VISIBLE);
@@ -372,8 +394,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             data = new LineChartData(lines);
             data.setAxisXBottom(new Axis().setHasLines(true).setTextColor(ChartUtils.COLOR_GREEN));
-            data.setAxisYLeft(new Axis().setHasLines(true).setTextColor(ChartUtils.COLOR_GREEN));
-
+            data.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(4).setTextColor(ChartUtils.COLOR_GREEN));
 
 
             // prepare preview data, is better to use separate deep copy for preview recordChart.
@@ -465,7 +486,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             lineData = new LineChartData(lines);
             lineData.setAxisXBottom(axisX.setHasLines(true));
-            lineData.setAxisYLeft(axisY.setMaxLabelChars(3));
+            lineData.setAxisYLeft(axisY.setMaxLabelChars(4));
 
 
 
@@ -663,8 +684,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
         }
 
-
-
         //初始化蓝牙接收器
         private void  initBluetoothReciver()
         {
@@ -762,7 +781,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                     File sdcardDir = Environment.getExternalStorageDirectory();
                     //得到一个路径，内容是sdcard的文件夹路径和名字
 
-                     path = sdcardDir.getPath() + "/wukongSenser/templeSenser";
+                    path = sdcardDir.getPath() + "/wukongSenser/templeSenser";
                     File path1 = new File(path);
                     if (!path1.exists())
                         path1.mkdirs();
