@@ -6,7 +6,7 @@
     android:paddingBottom="8dp"
     android:paddingLeft="6dp"
     android:paddingRight="6dp"
-    android:paddingTop="8dp"
+    android:paddingTop="10dp"
 
     tools:context="lecho.lib.hellocharts.samples.PreviewLineChartActivity$PlaceholderFragment" >
 
@@ -108,7 +108,8 @@
             android:textSize="27sp"
             android:id="@+id/buttonRecord"
             android:layout_above="@id/read"
-            android:layout_centerVertical="true" />
+            android:layout_centerHorizontal="true"
+            android:paddingTop="6dp" />
 
 
 
@@ -149,7 +150,7 @@
             android:layout_height="47dp"
             android:text="返回"
             android:id="@+id/buttonReturnReal"
-            android:layout_below="@id/minimun_num"
+            android:layout_below="@id/minimum_text"
             android:gravity="center" />
 
 
