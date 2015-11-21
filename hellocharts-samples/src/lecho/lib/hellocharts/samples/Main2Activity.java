@@ -452,6 +452,10 @@ public class Main2Activity extends AppCompatActivity {
                                             Intent intent = new Intent(Main2Activity.this, LineColumnDependencyActivity.class);
                                             intent.putExtra("param1", "0");
                                             intent.putExtra("param2", "");
+                                            int[] state = new int[4];
+                                            Bundle stateB = new Bundle();
+                                            stateB.putIntArray("trans_state", state);
+                                            intent.putExtras(stateB);
                                             startActivity(intent);
                                         }
                                     })

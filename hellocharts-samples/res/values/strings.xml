@@ -30,6 +30,7 @@
     <string name="title_activity_main22">Main22Activity</string>
 
     <string name="read">读取</string>
+    <string name="record">纪录</string>
     <string name="setting">设置</string>
     <string name="clear">清空</string>
     <string name="scan">查看</string>
