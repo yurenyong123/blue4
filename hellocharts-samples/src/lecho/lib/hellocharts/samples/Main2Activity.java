@@ -105,9 +105,6 @@ public class Main2Activity extends AppCompatActivity {
         registerReceiver(new BluetoothReciver(), new IntentFilter("android.intent.action.ServiceToMain"));
     }
 
-    //方法2
-
-
 
 
     //初始化窗口
@@ -132,7 +129,6 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void showTips() {
-
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("提醒")
                 .setMessage("是否退出程序")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -157,6 +153,7 @@ public class Main2Activity extends AppCompatActivity {
                         }).create(); // 创建对话框
         alertDialog.show(); // 显示对话框
     }
+
     @Override
     protected void onDestroy() {
         System.out.println("mian2dis");
@@ -174,8 +171,6 @@ public class Main2Activity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
-
-
 
     //发送广播
     public void sendCmdBroadcast(int cmd ,String command, String value){
@@ -271,7 +266,6 @@ public class Main2Activity extends AppCompatActivity {
         }
     }
 
-
     //处理返回数据
     private void dealReturnState(int[] state)
     {
@@ -323,7 +317,6 @@ public class Main2Activity extends AppCompatActivity {
                 break;
         }
     }
-
 
     //蓝牙广播接收器
     private class BluetoothReciver extends BroadcastReceiver

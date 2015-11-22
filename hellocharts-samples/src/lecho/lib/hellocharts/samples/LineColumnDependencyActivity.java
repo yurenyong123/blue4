@@ -240,9 +240,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             realButtonRecord.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (buttonRecordState == false) {
-
                         //选项数组
                         String[] choices = {"5秒", "10秒", "30秒", "60秒", "5分钟", "10分钟", "30分钟", "1小时", "2小时"};
                         //包含多个选项的对话框
@@ -251,12 +249,22 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                 .setTitle("参数选择")
                                 .setItems(choices, onselect).create();
                         dialog.show();
-                    } else {
-                        sendCmdBroadcast(CMD_REQUES_RECORD, 0);
-                        buttonRecordState = false;
-                        recordState.setText("▶");
-
                     }
+//                    else {
+//                        sendCmdBroadcast(CMD_REQUES_RECORD, 0);
+//                        buttonRecordState = false;
+//                        recordState.setText("▶");
+//
+//                    }
+                }
+            });
+
+            readButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    sendCmdBroadcast(CMD_REQUES_RECORD, 0);
+                    buttonRecordState = false;
+                    recordState.setText("▶");
                 }
             });
 
@@ -339,7 +347,104 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
                                                 showRecoedData(recordMsgBuffer);
 
+                                            } catch (FileNotFoundException e) {
+                                                e.printStackTrace();
+                                            }
+                                            catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
 
+                                        }
+
+                                    }
+                                })
+                                .setNegativeButton("取消", null)
+                                .show();
+                    }
+
+                }
+
+            });
+
+            lookRecordButton1.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    String[] fileName= new String[0];
+                    String[] filePath= new String[0];
+                    String path="";
+
+                    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+
+                        File sdcardDir = Environment.getExternalStorageDirectory();
+                        //得到一个路径，内容是sdcard的文件夹路径和名字
+
+                        path = sdcardDir.getPath() + "/wukongSenser/templeSenser";
+                        File path1 = new File(path);
+                        if (!path1.exists())
+                            path1.mkdirs();
+
+                        File[] files = new File(path).listFiles();
+                        fileName = new String[files.length];
+                        filePath = new String[files.length];
+
+                        for(int i=0;i<files.length;i++) {
+
+                            if(files[i].isFile()){
+                                filePath[i]=files[i].getAbsolutePath();
+                                fileName[i] = filePath[i].substring(filePath[i].lastIndexOf("/") + 1);
+                            }
+                        }
+                    }
+
+                    if(fileName.length==0)
+                    {
+                        new AlertDialog.Builder(LineColumnDependencyActivity.this)
+                                .setTitle("警告")
+                                .setMessage("您没有记录过数据")
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                    else {
+                        final String[] finalFilePath = filePath;
+                        final String finalPath = path;
+                        new AlertDialog.Builder(LineColumnDependencyActivity.this).
+                                setTitle("请选择文件")
+                                        //.setIcon(R.drawable.ic_launcher)
+                                .setItems(fileName, new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(LineColumnDependencyActivity.this, finalFilePath[which], Toast.LENGTH_SHORT).show();
+
+
+                                        //String filepath = finalPath + "/qq.txt";
+
+                                        System.out.println("pS "+finalFilePath[which]);
+
+                                        File file = new File(finalFilePath[which]);
+                                        if (file.exists()) {
+                                            // System.out.println("binggo");
+
+                                            FileReader fr=null;
+                                            try {
+                                                fr = new FileReader(file);
+                                                BufferedReader br=new BufferedReader(fr);
+                                                String temp=null;
+                                                String s="";
+                                                while((temp=br.readLine())!=null)
+                                                    s+=temp+"\n";
+                                                String [] ss=s.split("\n");
+
+                                                //System.out.println("LONG　"+ss.length);
+
+                                                int[] recordMsgBuffer =new int[ss.length];
+                                                for (int i = 0; i < ss.length; i++) {
+                                                    // System.out.println(ss[i]);
+                                                    recordMsgBuffer[i] = Integer.parseInt(ss[i]);
+                                                }
+
+                                                showRecoedData(recordMsgBuffer);
 
                                             } catch (FileNotFoundException e) {
                                                 e.printStackTrace();
@@ -360,6 +465,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                 }
 
             });
+
 
             return rootView;
         }
