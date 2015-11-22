@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,12 +105,10 @@ public class Main2Activity extends AppCompatActivity {
         registerReceiver(new BluetoothReciver(), new IntentFilter("android.intent.action.ServiceToMain"));
     }
 
-    @Override
-    protected void onDestroy() {
-        System.out.println("mian2dis");
-        Main2Activity.this.stopService(new Intent(Main2Activity.this, MyBluetoothService.class));
-        super.onDestroy();
-    }
+    //方法2
+
+
+
 
     //初始化窗口
     @Override
@@ -130,6 +129,50 @@ public class Main2Activity extends AppCompatActivity {
 
         System.out.println("start Seriver");
         Main2Activity.this.startService(new Intent(Main2Activity.this, MyBluetoothService.class));
+    }
+
+    private void showTips() {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("提醒")
+                .setMessage("是否退出程序")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+
+//                        System.runFinalizersOnExit(true);
+//                        System.exit(0);
+                    }
+
+                }).setNegativeButton("取消",
+
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        }).create(); // 创建对话框
+        alertDialog.show(); // 显示对话框
+    }
+    @Override
+    protected void onDestroy() {
+        System.out.println("mian2dis");
+        Main2Activity.this.stopService(new Intent(Main2Activity.this, MyBluetoothService.class));
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            showTips();
+            return false;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -332,15 +375,12 @@ public class Main2Activity extends AppCompatActivity {
                 Bundle bundle = intent.getExtras();
                 int cmd = bundle.getInt("cmd");
 
-
                 if(cmd == CMD_TRYLINK_RETURN) {
                     int[] stateBuffer = bundle.getIntArray("state");
                     dealReturnState(stateBuffer);
 //                    dealReturnState(bundle.getInt("state"));
                 }
-
             }
-
         }
     }
 
@@ -625,4 +665,5 @@ public class Main2Activity extends AppCompatActivity {
         }
         super.onResume();
     }
+
 }

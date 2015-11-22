@@ -114,26 +114,33 @@
             android:layout_below="@id/clear"
             android:layout_gravity="center"/>
 
-
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:id="@+id/minimum_text"
-            android:text="@string/minimun_temp"
+            android:layout_height="0dp"
+            android:id="@+id/blank1"
             android:gravity="center"
             android:layout_centerVertical="true"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="47dp"
+            android:id="@+id/minimum_text"
+            android:text="@string/minimun_temp"
+            android:layout_above="@id/blank1"
+            android:gravity="center"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:text="0℃"
             android:id="@+id/minimun_num"
-            android:layout_below="@id/minimum_text"
+            android:layout_below="@id/blank1"
             android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="47dp"
+            android:layout_height="30dp"
             android:text="100℃"
             android:id="@+id/maxmun_num"
             android:layout_above="@id/minimum_text"
@@ -150,9 +157,17 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="返回"
-            android:id="@+id/buttonReturnReal"
+            android:text="查看"
+            android:id="@+id/look_record_1"
             android:layout_below="@id/minimun_num"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="清理"
+            android:id="@+id/delete_file"
+            android:layout_below="@id/look_record_1"
             android:gravity="center" />
 
 

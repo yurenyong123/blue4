@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -96,8 +97,10 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         private LineChartData previewData;
         private Button realButtonRecord;
         private boolean buttonRecordState;
+        private boolean RealOrRecordBackState;
 
-        private Button recordButtonReturnReal;
+       //private Button recordButtonReturnReal;
+        private TextView recordState;
         private Button clearButton;
         private Button readButton;
         private Button lookRecordButton;
@@ -105,6 +108,8 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         private TextView maxmumTextView_num;
         private TextView minmunTextView;
         private TextView minmunTextView_num;
+        private Button lookRecordButton1;
+        private Button deleteFilesButton;
 
 
         //private int i = 0;
@@ -137,6 +142,9 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_column_dependency, container, false);
+            rootView.setFocusable(true);//这个和下面的这个命令必须要设置了，才能监听back事件。
+            rootView.setFocusableInTouchMode(true);
+            rootView.setOnKeyListener(backlistener);
 
             // *** TOP LINE recordChart ***
             realeChartTop = (LineChartView) rootView.findViewById(R.id.chart_top);
@@ -147,6 +155,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             realTempleTextView=(TextView)rootView.findViewById(R.id.TempletextView);
             realTempleTextView.setTextColor(nowColor);
 
+            recordState = (TextView)rootView.findViewById(R.id.blank);
             realButtonRecord=(Button)rootView.findViewById(R.id.buttonRecord);
             buttonRecordState=false;
             clearButton = (Button)rootView.findViewById(R.id.clear);
@@ -157,9 +166,11 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             maxmumTextView_num=(TextView)rootView.findViewById(R.id.maxmun_num);
             minmunTextView=(TextView)rootView.findViewById(R.id.minimum_text);
             minmunTextView_num=(TextView)rootView.findViewById(R.id.minimun_num);
+            lookRecordButton1 = (Button)rootView.findViewById(R.id.look_record_1);
+            deleteFilesButton = (Button)rootView.findViewById(R.id.delete_file);
 
-            recordButtonReturnReal=(Button)rootView.findViewById(R.id.buttonReturnReal);
-            recordButtonReturnReal.setOnClickListener(new returnRealeButtonListener());
+           // recordButtonReturnReal=(Button)rootView.findViewById(R.id.buttonReturnReal);
+            //recordButtonReturnReal.setOnClickListener(new returnRealeButtonListener());
 
             Intent intent = getIntent();
             String string_data1 = intent.getStringExtra("param1");
@@ -170,11 +181,11 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             if (stateBuffer[2] != 1)
             {
                 buttonRecordState=false;
-                realButtonRecord.setText("▶");
+                recordState.setText("▶");
             }
             else {
                 buttonRecordState=true;
-                realButtonRecord.setText("●");
+                recordState.setText("●");
             }
 
 
@@ -243,7 +254,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                     } else {
                         sendCmdBroadcast(CMD_REQUES_RECORD, 0);
                         buttonRecordState = false;
-                        realButtonRecord.setText("▶");
+                        recordState.setText("▶");
 
                     }
                 }
@@ -350,9 +361,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             });
 
-
-
-
             return rootView;
         }
 
@@ -363,7 +371,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
                 System.out.println("sssssssssssss " + which);
 
-                realButtonRecord.setText("●");
+                recordState.setText("●");
 
                 buttonRecordState=true;
 
@@ -403,7 +411,34 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
         };
 
+        private View.OnKeyListener backlistener = new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (i == KeyEvent.KEYCODE_BACK) {  //表示按返回键 时的操作
+                        Intent intent = getIntent();
+                        String string_data1 = intent.getStringExtra("param1");
 
+                        if (Integer.parseInt(string_data1) == 0)
+                        {   if (RealOrRecordBackState == false) {
+                            disReadHideRecord();
+                        }else {
+                            intent = new Intent(LineColumnDependencyActivity.this, Main2Activity.class);
+                            startActivity(intent);
+                        }
+
+                        }
+                        else
+                        {
+                            intent = new Intent(LineColumnDependencyActivity.this, Main2Activity.class);
+                            startActivity(intent);
+                        }
+                        return true;
+                    } //后退
+                    return false;    //已处理
+                }return false;
+            }
+        };
 
         @Override
         public void onDestroy() {
@@ -413,25 +448,28 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             Toast.makeText(LineColumnDependencyActivity.this, "ddddddddddddddd",Toast.LENGTH_SHORT).show();
         }
 
-        class returnRealeButtonListener implements View.OnClickListener
-        {
-            @Override
-            public void onClick(View v) {
-                Intent intent = getIntent();
-                String string_data1 = intent.getStringExtra("param1");
 
-                if (Integer.parseInt(string_data1) == 0)
-                {
-                    disReadHideRecord();
-                }
-                else
-                {
-                    intent = new Intent(LineColumnDependencyActivity.this, Main2Activity.class);
-                    startActivity(intent);
-                }
 
-            }
-        }
+//        class returnRealeButtonListener implements View.OnClickListener
+//        {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = getIntent();
+//                String string_data1 = intent.getStringExtra("param1");
+//
+//                if (Integer.parseInt(string_data1) == 0)
+//                {
+//                    disReadHideRecord();
+//                }
+//                else
+//                {
+//                    onDestroy();
+//                    intent = new Intent(LineColumnDependencyActivity.this, Main2Activity.class);
+//                    startActivity(intent);
+//                }
+//
+//            }
+//        }
 
 
         private  void disReadHideRecord()
@@ -447,12 +485,16 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             recordChart.setVisibility(View.GONE);
             recordPreviewChart.setVisibility(View.GONE);
-            recordButtonReturnReal.setVisibility(View.GONE);
+            //recordButtonReturnReal.setVisibility(View.GONE);
 
             maxmunTextView.setVisibility(View.GONE);
             maxmumTextView_num.setVisibility(View.GONE);
             minmunTextView.setVisibility(View.GONE);
             minmunTextView_num.setVisibility(View.GONE);
+            lookRecordButton1.setVisibility(View.GONE);
+            deleteFilesButton.setVisibility(View.GONE);
+
+            RealOrRecordBackState = true;
 
         }
 
@@ -470,12 +512,16 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             recordChart.setVisibility(View.VISIBLE);
             recordPreviewChart.setVisibility(View.VISIBLE);
-            recordButtonReturnReal.setVisibility(View.VISIBLE);
+            //recordButtonReturnReal.setVisibility(View.VISIBLE);
 
             maxmunTextView.setVisibility(View.VISIBLE);
             maxmumTextView_num.setVisibility(View.VISIBLE);
             minmunTextView.setVisibility(View.VISIBLE);
             minmunTextView_num.setVisibility(View.VISIBLE);
+            lookRecordButton1.setVisibility(View.VISIBLE);
+            deleteFilesButton.setVisibility(View.VISIBLE);
+
+            RealOrRecordBackState = false;
         }
 
         //产生数据 记录
@@ -514,7 +560,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
         private void previewY() {
             Viewport tempViewport = new Viewport(recordChart.getMaximumViewport());
-            float dy = tempViewport.height() / 4;
+            float dy = (tempViewport.height() + 0.2f) / 4;
             tempViewport.inset(0, dy);
             recordPreviewChart.setCurrentViewportWithAnimation(tempViewport);
             recordPreviewChart.setZoomType(ZoomType.VERTICAL);
