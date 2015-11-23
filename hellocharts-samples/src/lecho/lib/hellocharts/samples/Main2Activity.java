@@ -134,6 +134,7 @@ public class Main2Activity extends AppCompatActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
+                        Main2Activity.this.stopService(new Intent(Main2Activity.this, MyBluetoothService.class));
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

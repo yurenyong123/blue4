@@ -134,6 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="0℃"
+            android:textColor="@color/holo_blue"
             android:id="@+id/minimun_num"
             android:layout_below="@id/blank1"
             android:gravity="center"/>
@@ -142,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="100℃"
+            android:textColor="@color/holo_blue"
             android:id="@+id/maxmun_num"
             android:layout_above="@id/minimum_text"
             android:gravity="center"/>

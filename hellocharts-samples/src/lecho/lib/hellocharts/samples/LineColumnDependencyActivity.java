@@ -220,6 +220,26 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                             recordMsgBuffer[i] = Integer.parseInt(ss[i]);
                         }
 
+                        int max = recordMsgBuffer[0];
+                        int min = recordMsgBuffer[0];
+
+                        for (int i = 0; i < recordMsgBuffer.length; i++)
+                        {
+                            if (recordMsgBuffer[i] > max)
+                            {
+                                max = recordMsgBuffer[i];
+                            }
+
+                            if (recordMsgBuffer[i] < min)
+                            {
+                                min = recordMsgBuffer[i];
+                            }
+
+                        }
+
+                        maxmumTextView_num.setText(" " + max/10.0f + "℃");
+                        minmunTextView_num.setText(" " + min/10.0f + "℃");
+
                         showRecoedData(recordMsgBuffer);
 
 
@@ -345,6 +365,26 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                                     recordMsgBuffer[i] = Integer.parseInt(ss[i]);
                                                 }
 
+                                                int max = recordMsgBuffer[0];
+                                                int min = recordMsgBuffer[0];
+
+                                                for (int i = 0; i < recordMsgBuffer.length; i++)
+                                                {
+                                                    if (recordMsgBuffer[i] > max)
+                                                    {
+                                                        max = recordMsgBuffer[i];
+                                                    }
+
+                                                    if (recordMsgBuffer[i] < min)
+                                                    {
+                                                        min = recordMsgBuffer[i];
+                                                    }
+
+                                                }
+
+                                                maxmumTextView_num.setText(" " + max/10.0f + "℃");
+                                                minmunTextView_num.setText(" " + min/10.0f + "℃");
+
                                                 showRecoedData(recordMsgBuffer);
 
                                             } catch (FileNotFoundException e) {
@@ -443,6 +483,26 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                                     // System.out.println(ss[i]);
                                                     recordMsgBuffer[i] = Integer.parseInt(ss[i]);
                                                 }
+
+                                                int max = recordMsgBuffer[0];
+                                                int min = recordMsgBuffer[0];
+
+                                                for (int i = 0; i < recordMsgBuffer.length; i++)
+                                                {
+                                                    if (recordMsgBuffer[i] > max)
+                                                    {
+                                                        max = recordMsgBuffer[i];
+                                                    }
+
+                                                    if (recordMsgBuffer[i] < min)
+                                                    {
+                                                        min = recordMsgBuffer[i];
+                                                    }
+
+                                                }
+
+                                                maxmumTextView_num.setText(" " + max/10.0f + "℃");
+                                                minmunTextView_num.setText(" " + min/10.0f + "℃");
 
                                                 showRecoedData(recordMsgBuffer);
 
@@ -554,30 +614,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             Toast.makeText(LineColumnDependencyActivity.this, "ddddddddddddddd",Toast.LENGTH_SHORT).show();
         }
 
-
-
-//        class returnRealeButtonListener implements View.OnClickListener
-//        {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = getIntent();
-//                String string_data1 = intent.getStringExtra("param1");
-//
-//                if (Integer.parseInt(string_data1) == 0)
-//                {
-//                    disReadHideRecord();
-//                }
-//                else
-//                {
-//                    onDestroy();
-//                    intent = new Intent(LineColumnDependencyActivity.this, Main2Activity.class);
-//                    startActivity(intent);
-//                }
-//
-//            }
-//        }
-
-
         private  void disReadHideRecord()
         {
             realeChartTop.setVisibility(View.VISIBLE);
@@ -587,6 +623,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             clearButton.setVisibility(View.VISIBLE);
             readButton.setVisibility(View.VISIBLE);
             lookRecordButton.setVisibility(View.VISIBLE);
+            recordState.setVisibility(View.VISIBLE);
 
 
             recordChart.setVisibility(View.GONE);
@@ -614,6 +651,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             clearButton.setVisibility(View.GONE);
             readButton.setVisibility(View.GONE);
             lookRecordButton.setVisibility(View.GONE);
+            recordState.setVisibility(View.GONE);
 
 
             recordChart.setVisibility(View.VISIBLE);
@@ -658,10 +696,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             // Set color to grey to make preview area more visible.
             previewData = new LineChartData(data);
             previewData.getLines().get(0).setColor(ChartUtils.DEFAULT_DARKEN_COLOR);
-
-
-
-
         }
 
         private void previewY() {
@@ -705,10 +739,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             }
 
         }
-
-        /////////////////////////////////////////////////////////////////////////////////////////
-
-
 
         //产生数据 实时
         /////////////////////////////////////////////////////////////////////////////////////////
@@ -841,7 +871,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
                         realTempleTextView.setText("当前温度 " + templeValue + "℃");
 
-                        System.out.println("当前温度 " + templeValue + "℃ " + realButtonRecord.getText());
+                        //System.out.println("当前温度 " + templeValue + "℃ " + realButtonRecord.getText());
 
                         generateLineData(nowColor, 0, (float) templeValue);
 
@@ -969,121 +999,5 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         }
 
 
-        // MENU
-//        @Override
-//        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//            inflater.inflate(R.menu.temlpe_menu, menu);
-//        }
-//
-//
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//
-//            if (id == R.id.show_temple_data) {
-//
-//                //final String[] arrayFruit = new String[] { "1.txt", "2.txt", "3.txt", "4.txt" };
-//                String[] fileName= new String[0];
-//                String[] filePath= new String[0];
-//                String path="";
-//
-//                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//
-//                    File sdcardDir = Environment.getExternalStorageDirectory();
-//                    //得到一个路径，内容是sdcard的文件夹路径和名字
-//
-//                    path = sdcardDir.getPath() + "/wukongSenser/templeSenser";
-//                    File path1 = new File(path);
-//                    if (!path1.exists())
-//                        path1.mkdirs();
-//
-//                    File[] files = new File(path).listFiles();
-//                    fileName = new String[files.length];
-//                    filePath = new String[files.length];
-//
-//                    for(int i=0;i<files.length;i++) {
-//
-//                        if(files[i].isFile()){
-//                            filePath[i]=files[i].getAbsolutePath();
-//                            fileName[i] = filePath[i].substring(filePath[i].lastIndexOf("/") + 1);
-//                        }
-//                    }
-//                }
-//
-//                if(fileName.length==0)
-//                {
-//                    new AlertDialog.Builder(LineColumnDependencyActivity.this)
-//                            .setTitle("警告")
-//                            .setMessage("您没有记录过数据")
-//                            .setPositiveButton("确定", null)
-//                            .show();
-//                }
-//                else {
-//                    final String[] finalFilePath = filePath;
-//                    final String finalPath = path;
-//                    new AlertDialog.Builder(LineColumnDependencyActivity.this).
-//                            setTitle("请选择文件")
-//                                    //.setIcon(R.drawable.ic_launcher)
-//                            .setItems(fileName, new DialogInterface.OnClickListener() {
-//
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    Toast.makeText(LineColumnDependencyActivity.this, finalFilePath[which], Toast.LENGTH_SHORT).show();
-//
-//
-//                                    //String filepath = finalPath + "/qq.txt";
-//
-//                                    System.out.println("pS "+finalFilePath[which]);
-//
-//                                    File file = new File(finalFilePath[which]);
-//                                    if (file.exists()) {
-//                                       // System.out.println("binggo");
-//
-//                                        FileReader fr=null;
-//                                        try {
-//                                            fr = new FileReader(file);
-//                                            BufferedReader br=new BufferedReader(fr);
-//                                            String temp=null;
-//                                            String s="";
-//                                            while((temp=br.readLine())!=null)
-//                                                    s+=temp+"\n";
-//                                            String [] ss=s.split("\n");
-//
-//                                            //System.out.println("LONG　"+ss.length);
-//
-//                                            int[] recordMsgBuffer =new int[ss.length];
-//                                            for (int i = 0; i < ss.length; i++) {
-//                                               // System.out.println(ss[i]);
-//                                                recordMsgBuffer[i] = Integer.parseInt(ss[i]);
-//                                            }
-//
-//                                            showRecoedData(recordMsgBuffer);
-//
-//
-//
-//                                        } catch (FileNotFoundException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                        catch (IOException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    } else {
-//
-//                                    }
-//
-//                                }
-//                            })
-//                            .setNegativeButton("取消", null)
-//                            .show();
-//                }
-//                return true;
-//            }
-//            else if (id == R.id.save_data)
-//            {
-//                sendCmdBroadcast(CMD_REQUES_RECORD, 0);
-//            }
-//
-//            return super.onOptionsItemSelected(item);
-//        }
     }
 }
