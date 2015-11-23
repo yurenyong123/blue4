@@ -688,6 +688,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             data = new LineChartData(lines);
             data.setAxisXBottom(new Axis().setHasLines(true).setTextColor(ChartUtils.COLOR_GREEN));
             data.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(4).setTextColor(ChartUtils.COLOR_GREEN));
+            //data.setBaseValue(1.0f);
 
 
 
