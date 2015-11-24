@@ -671,10 +671,20 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         //产生数据 记录
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         private void generateDefaultData(int[] recordMsgBuffer) {
+            int max = recordMsgBuffer[0];
+            int min = recordMsgBuffer[0];
             List<PointValue> values = new ArrayList<PointValue>();
 
-            for(int j=0;j<recordMsgBuffer.length;j++) {
-                values.add(new PointValue(j, (float)recordMsgBuffer[j] / 10f));
+            for (int j = 0; j < recordMsgBuffer.length; j++) {
+                values.add(new PointValue(j, (float) recordMsgBuffer[j] / 10f));
+
+                if (recordMsgBuffer[j] > max) {
+                    max = recordMsgBuffer[j];
+                }
+
+                if (recordMsgBuffer[j] < min) {
+                    min = recordMsgBuffer[j];
+                }
             }
 
             Line line = new Line(values);
@@ -682,15 +692,28 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             line.setHasPoints(false);// too many values so don't draw points.
 //            line.setFilled(true);
 
+            List<PointValue> values1 = new ArrayList<PointValue>();
+            values1.add(new PointValue(0, (float) max / 10f + 0.2f));
+            Line line1 = new Line(values1);
+            line1.setHasPoints(false);// too many values so don't draw points.
+            line1.setPointRadius(0);
+
+            List<PointValue> values2 = new ArrayList<PointValue>();
+            values2.add(new PointValue(0, (float) min / 10f - 0.2f));
+            Line line2 = new Line(values2);
+            line2.setHasPoints(false);// too many values so don't draw points.
+            line2.setPointRadius(0);
+
+
             List<Line> lines = new ArrayList<Line>();
             lines.add(line);
+            lines.add(line1);
+            lines.add(line2);
 
             data = new LineChartData(lines);
             data.setAxisXBottom(new Axis().setHasLines(true).setTextColor(ChartUtils.COLOR_GREEN));
             data.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(4).setTextColor(ChartUtils.COLOR_GREEN));
             //data.setBaseValue(1.0f);
-
-
 
 
             // prepare preview data, is better to use separate deep copy for preview recordChart.
