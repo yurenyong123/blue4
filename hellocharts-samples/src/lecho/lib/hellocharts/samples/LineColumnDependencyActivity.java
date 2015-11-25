@@ -781,8 +781,24 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             line.setHasPoints(false);
             line.getShape();
             line.setCubic(false);//平滑
+
+//            List<PointValue> values1 = new ArrayList<PointValue>();
+//            values1.add(new PointValue(0, 50.0f));
+//            Line line1 = new Line(values1);
+//            line1.setHasPoints(false);// too many values so don't draw points.
+//            line1.setPointRadius(0);
+//
+//            List<PointValue> values2 = new ArrayList<PointValue>();
+//            values2.add(new PointValue(0, -10.0f));
+//            Line line2 = new Line(values2);
+//            line2.setHasPoints(false);// too many values so don't draw points.
+//            line2.setPointRadius(0);
+
+
             List<Line> lines = new ArrayList<Line>();
             lines.add(line);
+//            lines.add(line1);
+//            lines.add(line2);
 
 
 
