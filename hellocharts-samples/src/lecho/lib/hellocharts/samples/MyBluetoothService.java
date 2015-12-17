@@ -73,6 +73,8 @@ public class MyBluetoothService extends Service {
 
     private boolean IsGettingData;
     private boolean IsGettingRecordData;
+    private int RxCom_Flag0 = 0x00;
+    private int icount = 0x00;
 
 
     private  int[] recordMsgBuffer=new int[0];
@@ -410,7 +412,7 @@ public class MyBluetoothService extends Service {
         int data = 0;
         try {
             data = inStream.read();
-            System.out.print("("+data+") ");
+            //System.out.print("("+data+") ");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -428,8 +430,10 @@ public class MyBluetoothService extends Service {
             System.out.print("SSen " + cmd);
             if(cmd==CMD_GET_DATA)
                 sendCmd(2);//发送请求
-            else if(cmd==CMD_TRY_LINK)
+            else if(cmd==CMD_TRY_LINK) {
                 sendCmd(1);//发送请求
+                sendCmd(1);
+            }
             else if(cmd==CMD_SETTING_RECORD)
                 sendCmd(CMD_SETTING_RECORD);
             else if(cmd==CMD_REQUES_RECORD)
@@ -587,6 +591,218 @@ public class MyBluetoothService extends Service {
         }
         return returnValue;
     }
+
+
+//    private int tryGetData1(int cmd) //请求实时数据
+//    {
+//        int returnValue=RETURN_VALUE_FAILED;
+//        if (bluetoothFlag) {
+//            if(cmd==CMD_GET_DATA)
+//                sendCmd(2);//发送请求
+//            else if(cmd==CMD_TRY_LINK) {
+//                sendCmd(1);//发送请求
+//                sendCmd(1);
+//            }
+//            else if(cmd==CMD_SETTING_RECORD)
+//                sendCmd(CMD_SETTING_RECORD);
+//            else if(cmd==CMD_REQUES_RECORD)
+//                sendCmd(CMD_REQUES_RECORD);
+//
+//            int i=0;
+//            int dataLenght=0;
+//
+//
+//            while (true)
+//            {
+//                //System.out.print("T");
+//                try {
+//                    if(inStream.available()>0)
+//                    {
+//                        int data = getData();
+//
+//                        if (RxCom_Flag0 == 0)
+//                        {
+//                            if (data ==0x1A)
+//                            {
+//                                icount = 0;
+//                                data_buffer[icount] = data;
+//                                icount++;
+//                                RxCom_Flag0 = 1;
+//                            }
+//                        }
+//                        else if (RxCom_Flag0==1)
+//                        {
+//                            if(data==0x1a)
+//                            {
+//                                icount=0;
+//                                data_buffer[icount]=data;
+//                                icount++;
+//                            }
+//
+//                            else if(data==0x1d)
+//                            {
+//                                data_buffer[icount]=data;
+//                                icount += 1;
+//
+//                                unpro_data(data_buffer, icount);
+//                                Deal_data(myId);
+//
+//
+//                                RxCom_Flag0=0;
+//
+//                            }
+//                            else
+//                            {
+//                                data_buffer[icount]=data;
+//                                icount++;
+//                                if(icount>2000)
+//                                {
+//                                    icount = 0;
+//                                }
+//                            }
+//                        }
+//
+//                        if(data==0x1A)
+//                            i=0;
+//                        else if(data==0x1D)//尾
+//                        {
+//                            returnValue= RETURN_VALUE_SUCCESSED;
+//                            break;
+//                        }
+//                        if(i==9)//命令字
+//                        {
+//                            int H1 = data;
+//                            int H2 = getData();
+//                            int L1 = getData();
+//                            int L2 = getData();
+//                            i+=3;
+//                            System.out.println("");
+//                            System.out.println(H1+" "+H2+" "+L1+" "+L2+" ");
+//                            int cmdText=(H1<<12|H2<<8|L1<<4|L2);
+//
+//                            System.out.println("cmdText "+cmdText+" cmd "+cmd);
+//                            if(cmd==CMD_TRY_LINK) {
+//                                if (cmdText == 2)
+//                                    returnValue= RETURN_VALUE_SUCCESSED;
+//                                else
+//                                    returnValue= RETURN_VALUE_FAILED;
+//                                //break;
+//                            }
+//                            else if(cmd==CMD_SETTING_RECORD)
+//                            {
+//                                if (cmdText == 4106)
+//                                    returnValue= RETURN_VALUE_SUCCESSED;
+//                                else
+//                                    returnValue= RETURN_VALUE_FAILED;
+//                                //break;
+//                            }
+//                            else if(cmd==CMD_REQUES_RECORD)
+//                            {
+//                                if (cmdText == 4108)
+//                                    returnValue= RETURN_VALUE_SUCCESSED;
+//                                else
+//                                    returnValue= RETURN_VALUE_FAILED;
+//                                //break;
+//                            }
+//                        }
+//                        else if(i==13)//数据长度
+//                        {
+//                            int H1 = data;
+//                            int H2 = getData();
+//                            int L1 = getData();
+//                            int L2 = getData();
+//                            i+=3;
+//                            dataLenght=(H1<<12|H2<<8|L1<<4|L2);
+//
+//                            if(cmd==CMD_REQUES_RECORD)
+//                                dataLenght=dataLenght*2;
+//                            System.out.println("DL "+dataLenght);
+//                        }
+//                        else if(i==17)//CRC
+//                        {
+//                            int H1 = data;
+//                            int H2 = getData();
+//                            int L1 = getData();
+//                            int L2 = getData();
+//                            i+=3;
+//                            System.out.println("CRC ");
+//                        }
+//                        else if(i==21)//数据
+//                        {
+//                            if (cmd==CMD_TRY_LINK)
+//                            {
+//                                stateBuffer = new int[4];
+//                                int H1,H2,L1,L2 ;
+//                                for(int j=0;j<stateBuffer.length;j++)
+//                                {
+//                                    if(j==0)
+//                                    {
+//                                        H1 = data;
+//                                        H2 = getData();
+//                                        L1 = getData();
+//                                        L2 = getData();
+//                                    }
+//                                    else {
+//                                        H1 = getData();
+//                                        H2 = getData();
+//                                        L1 = getData();
+//                                        L2 = getData();
+//                                    }
+//                                    stateBuffer[j]=(H1<<12|H2<<8|L1<<4|L2);
+//                                }
+//                            }
+//                            else if(cmd==CMD_REQUES_RECORD)
+//                            {
+//                                recordMsgBuffer=new int[dataLenght/4];
+//                                int H1,H2,L1,L2 ;
+//                                for(int j=0;j<recordMsgBuffer.length;j++)
+//                                {
+//                                    if(j==0)
+//                                    {
+//                                        H1 = data;
+//                                        H2 = getData();
+//                                        L1 = getData();
+//                                        L2 = getData();
+//                                    }
+//                                    else {
+//                                        H1 = getData();
+//                                        H2 = getData();
+//                                        L1 = getData();
+//                                        L2 = getData();
+//                                    }
+//                                    recordMsgBuffer[j]=(H1<<12|H2<<8|L1<<4|L2);
+//                                    System.out.print("[" + recordMsgBuffer[j]+"] ");
+//                                }
+//                                System.out.println();
+//                            }
+//                            else {
+//                                getData();
+//                                getData();
+//                                getData();
+//                                int H1=getData();
+//                                int H2 = getData();
+//                                int L1 = getData();
+//                                int L2 = getData();
+//                                i += 3;
+//                                nowValue = (H1 << 12 | H2 << 8 | L1 << 4 | L2);
+//                                System.out.println("value " + nowValue + " ");
+//                            }
+//                        }
+//                        i++;
+//                    }
+//                    else
+//                    {
+//                        // System.out.print("k");
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return returnValue;
+//    }
+
+
 
     public class MyGetDataThread extends Thread{//取得事实数据线程
         @Override

@@ -89,7 +89,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="▶"
+            android:text="●"
             android:textSize="27sp"
             android:id="@+id/blank"
             android:layout_above="@id/buttonRecord"

@@ -38,7 +38,7 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <!--<action android:name=".Main2Activity" />-->
                 <action android:name="android.intent.action.MAIN" />

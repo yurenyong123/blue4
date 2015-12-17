@@ -181,11 +181,13 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             if (stateBuffer[2] != 1)
             {
                 buttonRecordState=false;
-                recordState.setText("▶");
+                recordState.setText("●");
+                recordState.setTextColor(getResources().getColor(R.color.holo_blue_light));
             }
             else {
                 buttonRecordState=true;
                 recordState.setText("●");
+                recordState.setTextColor(getResources().getColor(R.color.holo_blue_light));
             }
 
 
@@ -197,7 +199,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                 sendCmdBroadcast(CMD_GET_DATA,0);//请求数据
             }
             else{
-
                 File file = new File(string_data2);
                 if (file.exists()) {
                     // System.out.println("binggo");
@@ -259,8 +260,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
             realButtonRecord.setOnClickListener(new Button.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    if (buttonRecordState == false) {
+                public void onClick(View v)  {
                         //选项数组
                         String[] choices = {"5秒", "10秒", "30秒", "60秒", "5分钟", "10分钟", "30分钟", "1小时", "2小时"};
                         //包含多个选项的对话框
@@ -269,13 +269,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                 .setTitle("参数选择")
                                 .setItems(choices, onselect).create();
                         dialog.show();
-                    }
-//                    else {
-//                        sendCmdBroadcast(CMD_REQUES_RECORD, 0);
-//                        buttonRecordState = false;
-//                        recordState.setText("▶");
 //
-//                    }
                 }
             });
 
@@ -284,7 +278,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                 public void onClick(View v){
                     sendCmdBroadcast(CMD_REQUES_RECORD, 0);
                     buttonRecordState = false;
-                    recordState.setText("▶");
                 }
             });
 
@@ -396,7 +389,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                         } else {
 
                                         }
-
                                     }
                                 })
                                 .setNegativeButton("取消", null)
@@ -687,6 +679,11 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                 }
             }
 
+            if (max - min < 50) {
+                max = max + 25;
+                min = min - 25;
+            }
+
             Line line = new Line(values);
             line.setColor(ChartUtils.COLOR_GREEN);
             line.setHasPoints(false);// too many values so don't draw points.
@@ -910,6 +907,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                         templeValue=templeValue/(float)10;
 
                         realTempleTextView.setText("当前温度 " + templeValue + "℃");
+
 
                         //System.out.println("当前温度 " + templeValue + "℃ " + realButtonRecord.getText());
 
