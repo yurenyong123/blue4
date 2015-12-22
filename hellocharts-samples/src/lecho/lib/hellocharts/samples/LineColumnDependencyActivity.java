@@ -110,6 +110,8 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         private TextView minmunTextView_num;
         private Button lookRecordButton1;
         private Button deleteFilesButton;
+        private TextView StartTime;
+        private TextView EndTime;
 
 
         //private int i = 0;
@@ -168,6 +170,10 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             minmunTextView_num=(TextView)rootView.findViewById(R.id.minimun_num);
             lookRecordButton1 = (Button)rootView.findViewById(R.id.look_record_1);
             deleteFilesButton = (Button)rootView.findViewById(R.id.delete_file);
+
+            StartTime = (TextView)rootView.findViewById(R.id.start_time);
+            EndTime = (TextView)rootView.findViewById(R.id.end_time);
+
 
            // recordButtonReturnReal=(Button)rootView.findViewById(R.id.buttonReturnReal);
             //recordButtonReturnReal.setOnClickListener(new returnRealeButtonListener());
@@ -629,6 +635,10 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             lookRecordButton1.setVisibility(View.GONE);
             deleteFilesButton.setVisibility(View.GONE);
 
+            StartTime.setVisibility(View.GONE);
+            EndTime.setVisibility(View.GONE);
+
+
             RealOrRecordBackState = true;
 
         }
@@ -656,6 +666,9 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             minmunTextView_num.setVisibility(View.VISIBLE);
             lookRecordButton1.setVisibility(View.VISIBLE);
             deleteFilesButton.setVisibility(View.VISIBLE);
+
+            StartTime.setVisibility(View.VISIBLE);
+            EndTime.setVisibility(View.VISIBLE);
 
             RealOrRecordBackState = false;
         }
