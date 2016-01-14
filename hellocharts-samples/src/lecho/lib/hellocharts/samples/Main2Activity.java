@@ -27,7 +27,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -592,7 +595,15 @@ public class Main2Activity extends AppCompatActivity {
 
                                 //String filepath = finalPath + "/qq.txt";
 
-                                System.out.println("pS "+finalFilePath[which]);
+                                //System.out.println("pS "+finalFilePath[which]);
+//                                SimpleDateFormat sdf  =new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+//                                String[] filenamelist = finalFilePath[which].split("/");
+//                                String filename = filenamelist[6];
+//                                String filename1 = filename.substring(0,filename.length() - 8);
+//                                ParsePosition pos = new ParsePosition(0);
+//                                Date endDate = sdf.parse(filename1,pos);
+//                                Date startDate = new Date(endDate.getTime() -  3 * 24 * 60 * 60 * 1000);
+
 
                                 File file = new File(finalFilePath[which]);
                                 if (file.exists()) {

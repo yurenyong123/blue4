@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,8 +64,6 @@ import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PreviewLineChartView;
 
 public class LineColumnDependencyActivity extends AppCompatActivity  {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +143,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_column_dependency, container, false);
-            rootView.setFocusable(true);//这个和下面的这个命令必须要设置了，才能监听back事件。
+            rootView.setFocusable(true);
             rootView.setFocusableInTouchMode(true);
             rootView.setOnKeyListener(backlistener);
 
@@ -211,6 +210,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
                     FileReader fr=null;
                     try {
+
                         fr = new FileReader(file);
                         BufferedReader br=new BufferedReader(fr);
                         String temp=null;
@@ -229,6 +229,17 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
 
                         int max = recordMsgBuffer[0];
                         int min = recordMsgBuffer[0];
+
+                        SimpleDateFormat sdf  =new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+                        String[] filenamelist =string_data2.split("/");
+                        String filename = filenamelist[6];
+                        String filename1 = filename.substring(0, filename.length() - 8);
+                        ParsePosition pos = new ParsePosition(0);
+                        Date endDate = sdf.parse(filename1,pos);
+                        Date startDate = new Date(endDate.getTime() -  ss.length * 1 * 1000);
+                        SimpleDateFormat formatter  =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String EndDataString = formatter.format(endDate);
+                        String StartDateString = formatter.format(startDate);
 
                         for (int i = 0; i < recordMsgBuffer.length; i++)
                         {
@@ -309,7 +320,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                         filePath = new String[files.length];
 
                         for(int i=0;i<files.length;i++) {
-
                             if(files[i].isFile()){
                                 filePath[i]=files[i].getAbsolutePath();
                                 fileName[i] = filePath[i].substring(filePath[i].lastIndexOf("/") + 1);
@@ -330,35 +340,26 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                         final String finalPath = path;
                         new AlertDialog.Builder(LineColumnDependencyActivity.this).
                                 setTitle("请选择文件")
-                                        //.setIcon(R.drawable.ic_launcher)
                                 .setItems(fileName, new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(LineColumnDependencyActivity.this, finalFilePath[which], Toast.LENGTH_SHORT).show();
 
-
-                                        //String filepath = finalPath + "/qq.txt";
-
-                                        System.out.println("pS "+finalFilePath[which]);
-
                                         File file = new File(finalFilePath[which]);
                                         if (file.exists()) {
-                                            // System.out.println("binggo");
 
-                                            FileReader fr=null;
+                                            FileReader fr = null;
                                             try {
                                                 fr = new FileReader(file);
-                                                BufferedReader br=new BufferedReader(fr);
-                                                String temp=null;
-                                                String s="";
-                                                while((temp=br.readLine())!=null)
-                                                    s+=temp+"\n";
-                                                String [] ss=s.split("\n");
+                                                BufferedReader br = new BufferedReader(fr);
+                                                String temp = null;
+                                                String s = "";
+                                                while ((temp = br.readLine()) != null)
+                                                    s += temp + "\n";
+                                                String[] ss = s.split("\n");
 
-                                                //System.out.println("LONG　"+ss.length);
-
-                                                int[] recordMsgBuffer =new int[ss.length];
+                                                int[] recordMsgBuffer = new int[ss.length];
                                                 for (int i = 0; i < ss.length; i++) {
                                                     // System.out.println(ss[i]);
                                                     recordMsgBuffer[i] = Integer.parseInt(ss[i]);
@@ -367,29 +368,25 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
                                                 int max = recordMsgBuffer[0];
                                                 int min = recordMsgBuffer[0];
 
-                                                for (int i = 0; i < recordMsgBuffer.length; i++)
-                                                {
-                                                    if (recordMsgBuffer[i] > max)
-                                                    {
+                                                for (int i = 0; i < recordMsgBuffer.length; i++) {
+                                                    if (recordMsgBuffer[i] > max) {
                                                         max = recordMsgBuffer[i];
                                                     }
 
-                                                    if (recordMsgBuffer[i] < min)
-                                                    {
+                                                    if (recordMsgBuffer[i] < min) {
                                                         min = recordMsgBuffer[i];
                                                     }
 
                                                 }
 
-                                                maxmumTextView_num.setText(" " + max/10.0f + "℃");
-                                                minmunTextView_num.setText(" " + min/10.0f + "℃");
+                                                maxmumTextView_num.setText(" " + max / 10.0f + "℃");
+                                                minmunTextView_num.setText(" " + min / 10.0f + "℃");
 
                                                 showRecoedData(recordMsgBuffer);
 
                                             } catch (FileNotFoundException e) {
                                                 e.printStackTrace();
-                                            }
-                                            catch (IOException e) {
+                                            } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
                                         } else {
@@ -723,8 +720,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             data = new LineChartData(lines);
             data.setAxisXBottom(new Axis().setHasLines(true).setTextColor(ChartUtils.COLOR_GREEN));
             data.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(4).setTextColor(ChartUtils.COLOR_GREEN));
-            //data.setBaseValue(1.0f);
-
 
             // prepare preview data, is better to use separate deep copy for preview recordChart.
             // Set color to grey to make preview area more visible.
@@ -792,17 +787,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             line.getShape();
             line.setCubic(false);//平滑
 
-//            List<PointValue> values1 = new ArrayList<PointValue>();
-//            values1.add(new PointValue(0, 50.0f));
-//            Line line1 = new Line(values1);
-//            line1.setHasPoints(false);// too many values so don't draw points.
-//            line1.setPointRadius(0);
-//
-//            List<PointValue> values2 = new ArrayList<PointValue>();
-//            values2.add(new PointValue(0, -10.0f));
-//            Line line2 = new Line(values2);
-//            line2.setHasPoints(false);// too many values so don't draw points.
-//            line2.setPointRadius(0);
 
 
             List<Line> lines = new ArrayList<Line>();
@@ -899,7 +883,6 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
             // Start new data animation with 300ms duration;
             realeChartTop.startDataAnimation(0);
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //蓝牙广播接收器
         private class BluetoothReciver extends BroadcastReceiver

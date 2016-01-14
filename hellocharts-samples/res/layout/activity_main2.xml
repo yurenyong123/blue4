@@ -26,7 +26,7 @@
             android:id="@+id/tasks_view"
             android:layout_width="200dip"
             android:layout_height="200dip"
-            tc:radius="90dip"
+            tc:radius="80dip"
             tc:strokeWidth="10dip"
             tc:circleColor="@color/holo_blue"
             tc:ringColor="@color/holo_blue_dark"
