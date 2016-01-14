@@ -132,6 +132,7 @@ public class LineColumnDependencyActivity extends AppCompatActivity  {
         static final int CMD_RETURN_RECORD_DATA = 0x03;
 
 
+
         int nowColor=ChartUtils.COLOR_BLUE;// .pickColor();
 
         float templeValue;
